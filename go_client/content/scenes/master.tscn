@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dtyoxm6y73xxk"]
+
+[ext_resource type="Script" path="res://content/scenes/area_2d.gd" id="1_534tj"]
+[ext_resource type="Script" path="res://content/scenes/master.gd" id="1_iawb6"]
+[ext_resource type="Texture2D" uid="uid://cby7xbnn3iy27" path="res://content/materials/board.svg" id="3_h7d26"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqrqb"]
+size = Vector2(952, 952)
+
+[node name="Master" type="Node2D"]
+script = ExtResource("1_iawb6")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(960, 540)
+script = ExtResource("1_534tj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+show_behind_parent = true
+shape = SubResource("RectangleShape2D_yqrqb")
+debug_color = Color(0, 0.6, 0.701961, 1)
+
+[node name="Board" type="Sprite2D" parent="Area2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_h7d26")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="input_event" from="Area2D" to="Area2D" method="_on_input_event"]
