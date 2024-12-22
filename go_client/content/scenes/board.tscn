@@ -11,6 +11,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_diha8")
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 show_behind_parent = true

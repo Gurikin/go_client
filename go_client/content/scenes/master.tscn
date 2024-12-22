@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtyoxm6y73xxk"]
+[gd_scene load_steps=4 format=3 uid="uid://dtyoxm6y73xxk"]
 
+[ext_resource type="Texture2D" uid="uid://bfe6ywtkt4vig" path="res://content/materials/black_stone.svg" id="2_2xvh8"]
 [ext_resource type="PackedScene" uid="uid://djyo02onqj35d" path="res://content/scenes/board.tscn" id="2_18kxf"]
+[ext_resource type="Texture2D" uid="uid://bb5scolefln3o" path="res://content/materials/white_stone.svg" id="3_8nfwg"]
 
 [node name="Master" type="Node2D"]
 
@@ -8,3 +10,11 @@
 position = Vector2(960, 540)
 
 [node name="Board" parent="." instance=ExtResource("2_18kxf")]
+
+[node name="BlackStone" type="Sprite2D" parent="."]
+position = Vector2(585, 818)
+texture = ExtResource("2_2xvh8")
+
+[node name="WhiteStone" type="Sprite2D" parent="."]
+position = Vector2(635, 818)
+texture = ExtResource("3_8nfwg")
