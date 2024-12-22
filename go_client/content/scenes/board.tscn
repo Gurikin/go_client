@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://djyo02onqj35d"]
+
+[ext_resource type="Texture2D" uid="uid://cby7xbnn3iy27" path="res://content/materials/board.svg" id="1_diha8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qt3ci"]
+size = Vector2(2048, 2064)
+
+[node name="Board" type="Board"]
+position = Vector2(960, 540)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_diha8")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+show_behind_parent = true
+shape = SubResource("RectangleShape2D_qt3ci")
+debug_color = Color(0, 0.6, 0.701961, 1)
+
+[connection signal="input_event" from="Area2D" to="Area2D" method="_on_input_event"]

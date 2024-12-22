@@ -1,27 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtyoxm6y73xxk"]
+[gd_scene load_steps=2 format=3 uid="uid://dtyoxm6y73xxk"]
 
-[ext_resource type="Texture2D" uid="uid://cby7xbnn3iy27" path="res://content/materials/board.svg" id="3_h7d26"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqrqb"]
-size = Vector2(952, 952)
+[ext_resource type="PackedScene" uid="uid://djyo02onqj35d" path="res://content/scenes/board.tscn" id="2_18kxf"]
 
 [node name="Master" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
 
-[node name="Board" type="Board" parent="."]
-position = Vector2(960, 540)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_h7d26")
-
-[node name="Area2D" type="Area2D" parent="Board"]
-scale = Vector2(2, 2)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Area2D"]
-show_behind_parent = true
-shape = SubResource("RectangleShape2D_yqrqb")
-debug_color = Color(0, 0.6, 0.701961, 1)
-
-[connection signal="input_event" from="Board/Area2D" to="." method="_on_area_2d_input_event"]
-[connection signal="input_event" from="Board/Area2D" to="Board/Area2D" method="_on_input_event"]
+[node name="Board" parent="." instance=ExtResource("2_18kxf")]
