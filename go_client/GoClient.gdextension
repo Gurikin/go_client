@@ -4,5 +4,5 @@ compatibility_minimum = 4.3
 reloadable = true
 
 [libraries]
-windows.debug.x86_64 = "res://../gc_rust/target/debug/gc_rust.dll"
-windows.release.x86_64 = "res://../gc_rust/target/release/gc_rust.dll"
+windows.debug.x86_64 = "res://../gc/target/debug/game_client.dll"
+windows.release.x86_64 = "res://../gc/target/release/game_client.dll"

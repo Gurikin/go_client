@@ -1,7 +1,3 @@
-[package]
-name = "gs_rust"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-quiche = "0.22.0"
+[workspace]
+resolver = "2"
+members = ["client", "server"]
