@@ -78,7 +78,7 @@ fn main() {
 
     // Create the configuration for the QUIC connections.
     let mut config = quiche::Config::new(quiche::PROTOCOL_VERSION).unwrap();
-    config.verify_peer(true);
+    config.verify_peer(false);
 
     config
         .set_application_protos(&[
@@ -91,19 +91,19 @@ fn main() {
         ])
         .unwrap();
 
-    // match config.load_verify_locations_from_directory("./") {
-    //     Ok(_) => (),
-    //     Err(e) => error!("Load verify location error. {}", e),
-    // };
-    // match config.load_cert_chain_from_pem_file("cert-big.crt") {
-    //     Ok(_) => (),
-    //     Err(e) => error!("Load cert error. {}", e),
-    // }
+    //match config.load_verify_locations_from_directory("./") {
+    //    Ok(_) => (),
+    //    Err(e) => error!("Load verify location error. {}", e),
+    //};
+    match config.load_cert_chain_from_pem_file("cert.crt") {
+        Ok(_) => (),
+        Err(e) => error!("Load cert error. {}", e),
+    }
 
-    // match config.load_priv_key_from_pem_file("cert.key") {
-    //     Ok(_) => (),
-    //     Err(e) => error!("Load private key error. {}", e),
-    // }
+    match config.load_priv_key_from_pem_file("cert.key") {
+        Ok(_) => (),
+        Err(e) => error!("Load private key error. {}", e),
+    }
 
     config.set_max_idle_timeout(5000);
     config.set_max_recv_udp_payload_size(MAX_DATAGRAM_SIZE);
