@@ -51,7 +51,8 @@ struct Client {
 type ClientMap = HashMap<quiche::ConnectionId<'static>, Client>;
 
 fn main() {
-    pretty_env_logger::init_timed();
+    // pretty_env_logger::init_timed();
+    pretty_env_logger::formatted_timed_builder().filter_level(log::LevelFilter::Debug).init();
     let mut buf = [0; 65535];
     let mut out = [0; MAX_DATAGRAM_SIZE];
 
@@ -74,7 +75,7 @@ fn main() {
     poll.registry()
         .register(&mut socket, mio::Token(0), mio::Interest::READABLE)
         .unwrap();
-    println!("Listening on 127.0.0.1:4433");
+    info!("Listening on 127.0.0.1:4433");
 
     // Create the configuration for the QUIC connections.
     let mut config = quiche::Config::new(quiche::PROTOCOL_VERSION).unwrap();
@@ -149,14 +150,15 @@ fn main() {
             let (len, from) = match socket.recv_from(&mut buf) {
                 Ok(v) => {
                     info!("Got {} bytes packet from {}", v.0, v.1);
-                    match std::str::from_utf8(&buf) {
-                        Ok(body) => {
-                            info!("{}", body)
-                        },
-                        Err(e) => {
-                            error!("{}", e);
-                        },
-                    };                    
+                    info!("{}", String::from_utf8_lossy(&buf));
+                    // match std::str::from_utf8(&buf) {
+                    //     Ok(body) => {
+                    //         info!("{}", body)
+                    //     },
+                    //     Err(e) => {
+                    //         error!("{}", e);
+                    //     },
+                    // };                    
                     v
                 }
 

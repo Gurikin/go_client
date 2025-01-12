@@ -97,6 +97,7 @@ version = "0.1.0"
 dependencies = [
  "log",
  "mio",
+ "pretty_env_logger",
  "quiche",
  "ring",
  "url",
