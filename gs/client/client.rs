@@ -86,15 +86,15 @@ fn main() {
         .set_application_protos(&[b"hq-interop", b"hq-29", b"hq-28", b"hq-27", b"http/0.9"])
         .unwrap();
 
-    match config.load_cert_chain_from_pem_file("cert.crt") {
-        Ok(_) => (),
-        Err(e) => error!("Load cert error. {}", e),
-    }
+    // match config.load_cert_chain_from_pem_file("cert.crt") {
+    //     Ok(_) => (),
+    //     Err(e) => error!("Load cert error. {}", e),
+    // }
 
-    match config.load_priv_key_from_pem_file("cert.key") {
-        Ok(_) => (),
-        Err(e) => error!("Load private key error. {}", e),
-    }
+    // match config.load_priv_key_from_pem_file("cert.key") {
+    //     Ok(_) => (),
+    //     Err(e) => error!("Load private key error. {}", e),
+    // }
 
     config.set_max_idle_timeout(5000);
     config.set_max_recv_udp_payload_size(MAX_DATAGRAM_SIZE);
@@ -205,7 +205,7 @@ fn main() {
         if conn.is_established() && !req_sent {
             info!("sending HTTP request for {}", url.path());
 
-            let req = format!("GET {}\r\nContent-Type: application/json\r\nContent-Length: 24\r\n{{\"id\":10,\"name\":\"Гарри\"}}\r\n", url.path());
+            let req = format!("\r\n\0\0\0{{\"id\":10,\"name\":\"Гарри\"}}\r\n\0\0\0");
             conn.stream_send(HTTP_REQ_STREAM_ID, req.as_bytes(), true)
                 .unwrap();
 
