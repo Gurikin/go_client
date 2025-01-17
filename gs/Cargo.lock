@@ -111,6 +111,7 @@ dependencies = [
  "mio",
  "pretty_env_logger",
  "quiche",
+ "regex",
  "ring",
  "url",
 ]

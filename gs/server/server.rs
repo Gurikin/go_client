@@ -52,7 +52,9 @@ type ClientMap = HashMap<quiche::ConnectionId<'static>, Client>;
 
 fn main() {
     // pretty_env_logger::init_timed();
-    pretty_env_logger::formatted_timed_builder().filter_level(log::LevelFilter::Debug).init();
+    pretty_env_logger::formatted_timed_builder()
+        .filter_level(log::LevelFilter::Debug)
+        .init();
     let mut buf = [0; 65535];
     let mut out = [0; MAX_DATAGRAM_SIZE];
 
@@ -79,7 +81,6 @@ fn main() {
 
     // Create the configuration for the QUIC connections.
     let mut config = quiche::Config::new(quiche::PROTOCOL_VERSION).unwrap();
-    config.verify_peer(false);
 
     config
         .set_application_protos(&[
@@ -92,15 +93,11 @@ fn main() {
         ])
         .unwrap();
 
-    //match config.load_verify_locations_from_directory("./") {
-    //    Ok(_) => (),
-    //    Err(e) => error!("Load verify location error. {}", e),
-    //};
+    config.verify_peer(true);
     match config.load_cert_chain_from_pem_file("cert.crt") {
         Ok(_) => (),
         Err(e) => error!("Load cert error. {}", e),
     }
-
     match config.load_priv_key_from_pem_file("cert.key") {
         Ok(_) => (),
         Err(e) => error!("Load private key error. {}", e),
@@ -150,7 +147,11 @@ fn main() {
             let (len, from) = match socket.recv_from(&mut buf) {
                 Ok(v) => {
                     info!("Got {} bytes packet from {}", v.0, v.1);
-                    info!("{}", String::from_utf8_lossy(&buf));
+                    let request_bytes = String::from_utf8_lossy(&buf);
+                    let re = regex::Regex::new(r"\{(\{.*\})\}").unwrap();
+                    for (_, [body]) in re.captures_iter(&request_bytes).map(|c| c.extract()) {
+                        info!("{}", body);
+                    }
                     // match std::str::from_utf8(&buf) {
                     //     Ok(body) => {
                     //         info!("{}", body)
@@ -158,7 +159,7 @@ fn main() {
                     //     Err(e) => {
                     //         error!("{}", e);
                     //     },
-                    // };                    
+                    // };
                     v
                 }
 
